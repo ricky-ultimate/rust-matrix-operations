@@ -9,7 +9,7 @@ impl Matrix {
         Matrix{
             rows,
             cols,
-            data: vec![vec![0;rows];cols]
+            data: vec![vec![0;cols];rows]
         }
     }
 
@@ -24,5 +24,7 @@ impl Matrix {
 }
 
 fn main() {
-    println!("Hello, world!");
+    let mut matrix1 = Matrix::new(2, 3);
+    //matrix1.data = vec![vec![1, 2, 3], vec![4, 5, 6]];
+    matrix1.display();
 }

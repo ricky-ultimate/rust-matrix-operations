@@ -12,6 +12,15 @@ impl Matrix {
             data: vec![vec![0;rows];cols]
         }
     }
+
+    fn display(&self){
+        for row in &self.data {
+            for val in row {
+                print!("{} ", val);
+            }
+            println!();
+        }
+    }
 }
 
 fn main() {

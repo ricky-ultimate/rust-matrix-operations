@@ -24,7 +24,7 @@ impl Matrix {
 
     fn add(&self, other: &Matrix) -> Option<Matrix> {
         if self.rows != other.rows && self.cols != other.cols {
-            return None;
+            return None; //Incompatible dimensions
         }
 
         let mut result = Matrix::new(self.rows, other.cols);
@@ -40,7 +40,7 @@ impl Matrix {
 
     fn subtract(&self, other: &Matrix) -> Option<Matrix> {
         if self.rows != other.rows && self.cols != other.cols {
-            return None;
+            return None; //Incompatible dimensions
         }
 
         let mut result = Matrix::new(self.rows, other.cols);
@@ -53,36 +53,47 @@ impl Matrix {
 
         Some(result)
     }
+
+    fn multiply(&self, other: &Matrix) -> Option<Matrix> {
+        if self.cols != other.rows {
+            return None; // Incompatible dimensions
+        }
+        let mut result = Matrix::new(self.rows, other.cols);
+        for i in 0..self.rows {
+            for j in 0..other.cols {
+                for k in 0..self.cols {
+                    result.data[i][j] += self.data[i][k] * other.data[k][j];
+                }
+            }
+        }
+        Some(result)
+    }
 }
 
 fn main() {
     let mut matrix1 = Matrix::new(2, 3);
     matrix1.data = vec![vec![1, 2, 3], vec![4, 5, 6]];
 
-    let mut matrix2 = Matrix::new(2, 3);
-    matrix2.data = vec![vec![1, 2, 3], vec![4, 5, 7]];
+    let mut matrix2 = Matrix::new(3, 2);
+    matrix2.data = vec![vec![7, 8], vec![9, 10], vec![11, 12]];
 
     println!("Matrix 1:");
     matrix1.display();
     println!("\nMatrix 2:");
     matrix2.display();
 
-    let result = matrix1.add(&matrix2);
-    let result2 = matrix1.subtract(&matrix2);
-
+    // if let Some(result) = matrix1.multiply(&matrix2) {
+    //     println!("\nResult of multiplication:");
+    //     result.display();
+    // } else {
+    //     println!("Matrices cannot be multiplied due to incompatible dimensions.");
+    // }
+    let result = matrix1.multiply(&matrix2);
     match result {
         Some(result) => {
-            println!("\nResult of addition:");
+            println!("\nResult of multiplication:");
             result.display();
-        }
-        None => println!("Matrices cannot be added due to incompatible dimensions"),
-    }
-
-    match result2 {
-        Some(result2) => {
-            println!("\nResult of sucbtraction:");
-            result2.display();
-        }
-        None => println!("Matrices cannot be subtracted due to incompatible dimensions"),
+        },
+        None => println!("Matrices cannot be multiplied"),
     }
 }

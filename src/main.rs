@@ -1,19 +1,19 @@
-struct Matrix{
+struct Matrix {
     rows: usize,
     cols: usize,
-    data: Vec<Vec<i32>>
+    data: Vec<Vec<i32>>,
 }
 
 impl Matrix {
-    fn new(rows:usize, cols:usize) -> Matrix{
-        Matrix{
+    fn new(rows: usize, cols: usize) -> Matrix {
+        Matrix {
             rows,
             cols,
-            data: vec![vec![0;cols];rows]
+            data: vec![vec![0; cols]; rows],
         }
     }
 
-    fn display(&self){
+    fn display(&self) {
         for row in &self.data {
             for val in row {
                 print!("{} ", val);
@@ -22,22 +22,21 @@ impl Matrix {
         }
     }
 
-    fn add(&self, other: &Matrix) -> Option<Matrix>{
-       if self.rows != other.rows && self.cols != other.cols{
-        return None;
-       }
+    fn add(&self, other: &Matrix) -> Option<Matrix> {
+        if self.rows != other.rows && self.cols != other.cols {
+            return None;
+        }
 
         let mut result = Matrix::new(self.rows, other.cols);
 
-        for i in 0..self.rows{
-            for j in 00..self.cols{
+        for i in 0..self.rows {
+            for j in 00..self.cols {
                 result.data[i][j] = self.data[i][j] + other.data[i][j];
             }
         }
 
         Some(result)
     }
-
 }
 
 fn main() {
@@ -52,10 +51,13 @@ fn main() {
     println!("\nMatrix 2:");
     matrix2.display();
 
-    if let Some(result) = matrix1.add(&matrix2) {
-        println!("\nResult of addition:");
-        result.display();
-    } else {
-        println!("Matrices cannot be added");
+    let result = matrix1.add(&matrix2);
+
+    match result {
+        Some(result) => {
+            println!("\nResult of addition:");
+            result.display();
+        }
+        None => println!("Matrices cannot be added due to incompatible dimensions"),
     }
 }

@@ -37,6 +37,22 @@ impl Matrix {
 
         Some(result)
     }
+
+    fn subtract(&self, other: &Matrix) -> Option<Matrix> {
+        if self.rows != other.rows && self.cols != other.cols {
+            return None;
+        }
+
+        let mut result = Matrix::new(self.rows, other.cols);
+
+        for i in 0..self.rows {
+            for j in 00..self.cols {
+                result.data[i][j] = self.data[i][j] - other.data[i][j];
+            }
+        }
+
+        Some(result)
+    }
 }
 
 fn main() {
@@ -52,6 +68,7 @@ fn main() {
     matrix2.display();
 
     let result = matrix1.add(&matrix2);
+    let result2 = matrix1.subtract(&matrix2);
 
     match result {
         Some(result) => {
@@ -59,5 +76,13 @@ fn main() {
             result.display();
         }
         None => println!("Matrices cannot be added due to incompatible dimensions"),
+    }
+
+    match result2 {
+        Some(result2) => {
+            println!("\nResult of sucbtraction:");
+            result2.display();
+        }
+        None => println!("Matrices cannot be subtracted due to incompatible dimensions"),
     }
 }

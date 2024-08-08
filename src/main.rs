@@ -1,3 +1,5 @@
+use std::result;
+
 struct Matrix {
     rows: usize,
     cols: usize,
@@ -68,32 +70,29 @@ impl Matrix {
         }
         Some(result)
     }
+
+    fn deter(&self) -> Option<i32> {
+        if self.rows != self.cols && self.rows < 2 {
+            return None;
+        }
+
+        let result = self.data[0][0] * self.data[1][1] - self.data[0][1] * self.data[1][0];
+
+        Some(result)
+    }
 }
 
-fn main() {
+fn main(){
+
     let mut matrix1 = Matrix::new(2, 3);
-    matrix1.data = vec![vec![1, 2, 3], vec![4, 5, 6]];
+    matrix1.data = vec![vec![1,2], vec![3,5]];
 
-    let mut matrix2 = Matrix::new(3, 2);
-    matrix2.data = vec![vec![7, 8], vec![9, 10], vec![11, 12]];
-
-    println!("Matrix 1:");
     matrix1.display();
-    println!("\nMatrix 2:");
-    matrix2.display();
 
-    // if let Some(result) = matrix1.multiply(&matrix2) {
-    //     println!("\nResult of multiplication:");
-    //     result.display();
-    // } else {
-    //     println!("Matrices cannot be multiplied due to incompatible dimensions.");
-    // }
-    let result = matrix1.multiply(&matrix2);
-    match result {
-        Some(result) => {
-            println!("\nResult of multiplication:");
-            result.display();
-        },
-        None => println!("Matrices cannot be multiplied"),
+    if let Some(result) = matrix1.deter(){
+        println!("{}", result);
+    }
+    else {
+        println!("No result");
     }
 }

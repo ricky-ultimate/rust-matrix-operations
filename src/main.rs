@@ -105,6 +105,7 @@ fn main(){
     matrix1.display();
 
     if let Some(result) = matrix1.s_multiply(3){
+        println!();
         result.display();
     }
     else {

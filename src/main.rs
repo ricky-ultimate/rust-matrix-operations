@@ -1,5 +1,3 @@
-use std::result;
-
 struct Matrix {
     rows: usize,
     cols: usize,

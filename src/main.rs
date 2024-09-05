@@ -78,17 +78,34 @@ impl Matrix {
 
         Some(result)
     }
+
+
+    fn s_multiply(&self, num: i32) -> Option<Matrix> {
+        if false {
+            return None;
+        }
+
+        let mut result = Matrix::new(self.rows, self.cols);
+
+        for i in 0..self.rows{
+            for j in 0..self.cols{
+                result.data[i][j] = self.data[i][j] * num;
+            }
+        }
+
+        Some(result)
+    }
 }
 
 fn main(){
 
-    let mut matrix1 = Matrix::new(2, 3);
+    let mut matrix1 = Matrix::new(2, 2);
     matrix1.data = vec![vec![1,2], vec![3,5]];
 
     matrix1.display();
 
-    if let Some(result) = matrix1.deter(){
-        println!("{}", result);
+    if let Some(result) = matrix1.s_multiply(3){
+        result.display();
     }
     else {
         println!("No result");
